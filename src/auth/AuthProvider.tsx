@@ -10,6 +10,13 @@ const AuthProvider: FC<{ settings: UserManagerSettings }> = ({ settings, childre
   const manager = init(settings);
   const [user, setUser] = useState<User | null>(null);
 
+  const getUriPath = (uri: string) => {
+    return uri.substr(uri.indexOf('/', uri.indexOf('//') + 2));
+  };
+
+  const callbackUrl = settings.redirect_uri ? getUriPath(settings.redirect_uri) : '/auth/cb';
+  const silentCallbackUrl = settings.silent_redirect_uri ? getUriPath(settings.silent_redirect_uri) : '/auth/scb';
+
   const login = async (username?: string) => {
     oidcLogin(username);
   };
@@ -88,10 +95,10 @@ const AuthProvider: FC<{ settings: UserManagerSettings }> = ({ settings, childre
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       <Router>
-        <Route path="/authentication/callback">
+        <Route path={callbackUrl}>
           <SigninCallback />
         </Route>
-        <Route path="/authentication/silentcallback">
+        <Route path={silentCallbackUrl}>
           <SigninSilentCallback />
         </Route>
         <Route path="*">{children}</Route>
