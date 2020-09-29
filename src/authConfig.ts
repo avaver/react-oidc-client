@@ -9,7 +9,7 @@ import { UserManagerSettings } from 'oidc-client';
 // };
 
 const config: UserManagerSettings = {
-  authority: 'https://192.168.88.254:5000/',
+  authority: 'https://192.168.88.254:5001/',
   client_id: 'dentalsuite.web',
   redirect_uri: 'http://localhost:3000/authentication/callback',
   silent_redirect_uri: 'http://localhost:3000/authentication/silentcallback',
